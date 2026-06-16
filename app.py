@@ -7,7 +7,6 @@ from utils import (total_sales, average_sales, to_grade, grade_to_incentive,
 st.set_page_config(page_title="매출 분석 대시보드", layout="wide")
 
 # 상단 배너 이미지 (banner.png 파일을 함께 둘 것)
-# [수정] 강의록 10번에 명시된 올바른 레이아웃 속성인 use_container_width=True로 수정
 st.image("banner.png", use_container_width=True)
 st.title("지점 매출 분석 대시보드")
 
@@ -34,7 +33,6 @@ with tab1:
     q1 = st.number_input("1분기 매출", 0, 1000, 0)
     q2 = st.number_input("2분기 매출", 0, 1000, 0)
     q3 = st.number_input("3분기 매출", 0, 1000, 0)
-    # [수정] 콜론(:) 누락으로 인한 SyntaxError 문법 오류 수정
     if st.button("추가"):
         branches.append({"지점": name, "1분기": q1, "2분기": q2, "3분기": q3})
         st.success(f"{name} 지점을 추가했습니다.")
@@ -73,7 +71,6 @@ with tab3:
         quarter = QUARTERS[i]
         with cols[i]:
             st.subheader(quarter)
-            # [수정] 문자열과 숫자형의 + 결합으로 인한 TypeError를 방지하기 위해 f-string 문법으로 수정
             st.write(f"평균: {quarter_average(branches, quarter)}")
             st.write(f"최고: {quarter_top(branches, quarter)}")
 
@@ -94,7 +91,6 @@ with tab4:
     st.table(rank_table)
 
     st.header("등급 분포")
-    # [수정] 변수명 오타(brnaches -> branches)로 인한 NameError 정의 오류 수정
     dist = grade_distribution(branches)
     dist_data = [{"등급": g, "지점수": dist[g]} for g in ["A", "B", "C", "D", "F"]]
     st.bar_chart(dist_data, x="등급", y="지점수", horizontal=True, height=400)
